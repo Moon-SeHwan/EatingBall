@@ -1,4 +1,4 @@
-# Eating Ball
+# <img src="public/favicon.svg" width="32" height="32" valign="middle" /> Eating Ball
 
 React + Vite + TypeScript로 만든 간단한 격자 기반 먹이 수집 게임입니다.\
 Claude AI와 함께 제작했습니다. [2026-05-12 프로젝트 시작]
@@ -25,6 +25,10 @@ Claude AI와 함께 제작했습니다. [2026-05-12 프로젝트 시작]
 만든이: Claude AI with Farmer Moon  ·  2026-05-12
 이 프로젝트는 오픈 소스로 자유롭게 수정하여도 괜찮습니다.
 ```
+
+## 파비콘
+
+`public/favicon.svg` — 입을 벌린 빨간 공(팩맨 스타일)을 SVG로 제작했습니다. 다크 배경(`#1a1a2e`) 위에 게임 캐릭터 색상(`#e94560`)으로 오른쪽을 향해 입을 벌린 형태입니다.
 
 ## 콘솔 환영 메시지
 
