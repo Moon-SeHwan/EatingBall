@@ -1,7 +1,7 @@
 # EatingBall
 
 React + Vite + TypeScript로 만든 간단한 격자 기반 먹이 수집 게임입니다.\
-Claude AI와 함께 제작했습니다.
+Claude AI와 함께 제작했습니다. [2026-05-12 프로젝트 시작]
 
 ## 게임 소개
 
