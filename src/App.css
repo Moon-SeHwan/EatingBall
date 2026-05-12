@@ -24,6 +24,39 @@
   position: relative;
 }
 
+.lang-panel {
+  position: absolute;
+  right: calc(100% + 20px);
+  top: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  padding-top: 10px;
+  white-space: nowrap;
+}
+
+.lang-label {
+  color: #a0a0cc;
+  font-size: 0.9rem;
+}
+
+.lang-select {
+  padding: 6px 8px;
+  border: 1px solid #1a4a7a;
+  border-radius: 4px;
+  background: #0f3460;
+  color: #e0e0ff;
+  font-size: 0.9rem;
+  font-weight: bold;
+  cursor: pointer;
+  outline: none;
+}
+
+.lang-select:focus {
+  border-color: #a0c4ff;
+}
+
 .side-panel {
   position: absolute;
   left: calc(100% + 20px);

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { CELL_SIZE, GAP, GRID_SIZE, PADDING } from '@/game/constants'
 import { useGame } from '@/hooks/useGame'
+import { translations, type Lang } from '@/i18n/translations'
 import './App.css'
 
 function cellOffset(index: number): number {
@@ -10,6 +11,9 @@ function cellOffset(index: number): number {
 export default function App() {
   const [intervalSec, setIntervalSec] = useState('0.5')
   const [spawning, setSpawning] = useState(true)
+  const [lang, setLang] = useState<Lang>('ko')
+
+  const t = translations[lang]
 
   const parsed = parseFloat(intervalSec)
   const foodInterval = !isNaN(parsed) && parsed >= 0.1 ? Math.round(parsed * 1000) : 500
@@ -26,9 +30,23 @@ export default function App() {
 
   return (
     <div className="app">
-      <h1 className="title">볼보이</h1>
-      <p className="score">점수: {state.score}</p>
+      <h1 className="title">{t.title}</h1>
+      <p className="score">{t.score}: {state.score}</p>
       <div className="game-area">
+        <div className="lang-panel">
+          <label className="lang-label" htmlFor="lang-select">{t.langLabel}</label>
+          <select
+            id="lang-select"
+            className="lang-select"
+            value={lang}
+            onChange={(e) => setLang(e.target.value as Lang)}
+          >
+            <option value="ko">{t.langKo}</option>
+            <option value="en">{t.langEn}</option>
+            <option value="zh">{t.langZh}</option>
+            <option value="ja">{t.langJa}</option>
+          </select>
+        </div>
         <div className="grid-wrapper">
           <div className="grid">
             {Array.from({ length: GRID_SIZE }, (_, row) =>
@@ -53,10 +71,10 @@ export default function App() {
             className={`spawn-btn ${spawning ? 'on' : 'off'}`}
             onClick={() => setSpawning((s) => !s)}
           >
-            {spawning ? '생성 중지' : '생성 시작'}
+            {spawning ? t.spawnStop : t.spawnStart}
           </button>
           <div className="interval-row">
-            <label className="interval-label" htmlFor="interval">먹이 생성 주기</label>
+            <label className="interval-label" htmlFor="interval">{t.intervalLabel}</label>
             <input
               id="interval"
               className="interval-input"
@@ -66,9 +84,9 @@ export default function App() {
               value={intervalSec}
               onChange={handleIntervalChange}
             />
-            <span className="interval-unit">초</span>
+            <span className="interval-unit">{t.intervalUnit}</span>
           </div>
-          <p className="interval-hint">최솟값 0.1초 · 유효하지 않은 값은 0.5초로 대체됩니다</p>
+          <p className="interval-hint">{t.intervalHint}</p>
         </div>
       </div>
       <div className="btn-row">
@@ -76,24 +94,24 @@ export default function App() {
           className="reset-btn"
           onClick={() => dispatch({ type: 'RESET_SCORE' })}
         >
-          점수 초기화
+          {t.resetScore}
         </button>
         <button
           className={`mode-btn ${state.mode}`}
           onClick={() => dispatch({ type: 'TOGGLE_MODE' })}
         >
-          {state.mode === 'manual' ? '수동 모드' : '자동 모드'}
+          {state.mode === 'manual' ? t.manualMode : t.autoMode}
         </button>
       </div>
       {/* 고정 높이로 레이아웃 이동 방지 */}
       <div className="hint-area">
         <p className="hint" style={{ visibility: state.mode === 'manual' ? 'visible' : 'hidden' }}>
-          방향키로 캐릭터를 이동하세요
+          {t.hint}
         </p>
       </div>
       <footer className="footer">
-        <p>만든이: Claude AI with Farmer Moon&nbsp;&nbsp;·&nbsp;&nbsp;2026-05-12</p>
-        <p>이 프로젝트는 오픈 소스로 자유롭게 수정하여도 괜찮습니다.</p>
+        <p>{t.footer1}</p>
+        <p>{t.footer2}</p>
       </footer>
     </div>
   )
