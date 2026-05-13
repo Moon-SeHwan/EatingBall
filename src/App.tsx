@@ -10,23 +10,26 @@ function cellOffset(index: number): number {
 
 export default function App() {
   const [intervalSec, setIntervalSec] = useState('0.5')
+  const [autoStepSec, setAutoStepSec] = useState('0.5')
   const [spawning, setSpawning] = useState(true)
   const [lang, setLang] = useState<Lang>('ko')
 
   const t = translations[lang]
 
-  const parsed = parseFloat(intervalSec)
-  const foodInterval = !isNaN(parsed) && parsed >= 0.1 ? Math.round(parsed * 1000) : 500
+  const parsedFood = parseFloat(intervalSec)
+  const foodInterval = !isNaN(parsedFood) && parsedFood >= 0.1 ? Math.round(parsedFood * 1000) : 500
 
-  const { state, dispatch } = useGame(foodInterval, spawning)
+  const parsedStep = parseFloat(autoStepSec)
+  const autoStepInterval = !isNaN(parsedStep) && parsedStep >= 0.1 ? Math.round(parsedStep * 1000) : 500
 
-  const handleIntervalChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const val = e.target.value
-    // 숫자와 소수점 하나만 허용
-    if (/^\d*\.?\d*$/.test(val)) {
-      setIntervalSec(val)
+  const { state, dispatch } = useGame(foodInterval, spawning, autoStepInterval)
+
+  const handleNumericInput = (setter: (v: string) => void) =>
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const val = e.target.value
+      // 숫자와 소수점 하나만 허용
+      if (/^\d*\.?\d*$/.test(val)) setter(val)
     }
-  }
 
   return (
     <div className="app">
@@ -82,7 +85,20 @@ export default function App() {
               inputMode="decimal"
               autoComplete="off"
               value={intervalSec}
-              onChange={handleIntervalChange}
+              onChange={handleNumericInput(setIntervalSec)}
+            />
+            <span className="interval-unit">{t.intervalUnit}</span>
+          </div>
+          <div className="interval-row">
+            <label className="interval-label" htmlFor="auto-step">{t.autoStepLabel}</label>
+            <input
+              id="auto-step"
+              className="interval-input"
+              type="text"
+              inputMode="decimal"
+              autoComplete="off"
+              value={autoStepSec}
+              onChange={handleNumericInput(setAutoStepSec)}
             />
             <span className="interval-unit">{t.intervalUnit}</span>
           </div>

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useReducer } from 'react'
-import { AUTO_STEP_INTERVAL, GRID_SIZE } from '@/game/constants'
+import { GRID_SIZE } from '@/game/constants'
 import { initialState, reducer } from '@/game/reducer'
 import type { Pos } from '@/game/types'
 
@@ -10,7 +10,7 @@ function randomPos(): Pos {
   }
 }
 
-export function useGame(foodInterval: number, spawning: boolean) {
+export function useGame(foodInterval: number, spawning: boolean, autoStepInterval: number) {
   const [state, dispatch] = useReducer(reducer, initialState)
 
   const handleKey = useCallback(
@@ -45,14 +45,14 @@ export function useGame(foodInterval: number, spawning: boolean) {
     return () => clearInterval(id)
   }, [foodInterval, spawning])
 
-  // 자동 이동 (자동 모드)
+  // 자동 이동 (자동 모드, autoStepInterval 변경 시 재시작)
   useEffect(() => {
     if (state.mode !== 'auto') return
     const id = setInterval(() => {
       dispatch({ type: 'AUTO_STEP' })
-    }, AUTO_STEP_INTERVAL)
+    }, autoStepInterval)
     return () => clearInterval(id)
-  }, [state.mode])
+  }, [state.mode, autoStepInterval])
 
   return { state, dispatch }
 }
